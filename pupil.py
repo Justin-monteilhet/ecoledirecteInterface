@@ -64,25 +64,15 @@ class Pupil:
 
             d = m['disciplines']
             p_grades = {}
+            p_subjects = {}
             for subj in d:
                 if subj['groupeMatiere']:
                     continue
 
                 subject = dict_to_subject(subj)
+                p_subjects[subject.name] = subject
                 p_grades[subject.name] = subject
             
-            final_periodes.append(Period(p_id_, p_name, p_is_annual, p_dates, p_is_finished, p_averages, p_council_date, p_calcul_date, p_main_teacher, p_career_counselor, p_grades))
+            final_periodes.append(Period(p_id_, p_name, p_is_annual, p_dates, p_is_finished, p_averages, p_council_date, p_calcul_date, p_main_teacher, p_career_counselor, p_grades, p_subjects))
         
         return final_periodes
-
-if __name__ == '__main__':
-
-    with open('infos.json', 'r') as f:
-        data = json.load(f)
-        username = data['username']
-        password = data['password']
-        del data
-    
-    me = Pupil(username, password)
-    for period in me.get_periods():
-        print(period.averages)
